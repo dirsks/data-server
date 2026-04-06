@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json, os
 
-TOKEN = 'korone_place_491391_server'
+TOKEN = os.environ.get('TOKEN')
 DATA_FOLDER = 'data'
 
 if not os.path.exists(DATA_FOLDER):
