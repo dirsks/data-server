@@ -1,5 +1,17 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json, os
+import mysql.connector
+import os
+
+db=mysql.connector.connect(
+	host=os.environ.get('DB_HOST'),
+	user=os.environ.get('DB_USER'),
+	password=os.environ.get('DB_PASS'),
+	database=os.environ.get('DB_NAME'),
+	port=int(os.environ.get('DB_PORT'))
+)
+
+cursor=db.cursor()
 
 TOKEN = os.environ.get('TOKEN')
 DATA_FOLDER = 'data'
