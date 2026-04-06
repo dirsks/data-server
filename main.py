@@ -41,7 +41,7 @@ class Handler(BaseHTTPRequestHandler):
 			self.wfile.write(response.encode())
 
 		elif self.path == '/debug':
-			print('DEBUG RECEBIDO:', data)
+			print('received:', data)
 
 			self.send_response(200)
 			self.end_headers()
@@ -54,5 +54,5 @@ class Handler(BaseHTTPRequestHandler):
 port = int(os.environ.get('PORT', 3000))
 server = HTTPServer(('0.0.0.0', port), Handler)
 
-print('rodando...')
+print('running...')
 server.serve_forever()
