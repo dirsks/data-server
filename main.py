@@ -42,14 +42,23 @@ class Handler(BaseHTTPRequestHandler):
 
         elif self.path == '/load':
             path = f"{DATA_FOLDER}/{data['UserId']}.json"
+
             if os.path.exists(path):
                 with open(path) as f:
-                    response = f.read()
+                    response = json.load(f)
+
+                response['IsNew'] = False
+
             else:
-                response = json.dumps({"Coins": 0, "Blocks": {}})
+                response = {
+                    "Coins": 0,
+                    "Blocks": {},
+                    "IsNew": True
+                }
+
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(response.encode())
+            self.wfile.write(json.dumps(response).encode())
 
         elif self.path == '/debug':
             print('received:', data)
@@ -66,5 +75,5 @@ class Handler(BaseHTTPRequestHandler):
 
 port = int(os.environ.get('PORT', 3000))
 server = HTTPServer(('0.0.0.0', port), Handler)
-print('running...')
+print('Server running')
 server.serve_forever()
